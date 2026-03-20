@@ -11,15 +11,6 @@ env/
 # Environment variables
 .env
 
-# RAG generated data
-vectorstore/
-*.db
-*.sqlite
-*.pkl
-
-# Dataset (IMPORTANT)
-dataset/
-
 # Test / trial files
 trial/
 
