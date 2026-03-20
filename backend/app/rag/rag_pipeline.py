@@ -1,8 +1,10 @@
 from app.rag.embedder import embed
 from app.db.vectordb import get_collection
 from groq import Groq
+from dotenv import load_dotenv
 import os
 
+load_dotenv()  # Load environment variables from .env file
 client_llm = Groq(api_key=os.getenv("GROQ_API_KEY"))
 collection = get_collection()
 
