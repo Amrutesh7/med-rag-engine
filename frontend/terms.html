@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use — MedRAG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design Tokens (matches main project light theme) ───────── */
+    :root {
+      --bg-void:       #f0f4f9;
+      --bg-base:       #f5f8fc;
+      --bg-surface:    #ffffff;
+      --bg-raised:     #eef2f8;
+      --bg-hover:      #e6ecf5;
+
+      --border-subtle: rgba(30, 60, 120, 0.07);
+      --border-dim:    rgba(30, 60, 120, 0.12);
+      --border-bright: rgba(30, 60, 120, 0.22);
+
+      --teal:          #008f78;
+      --teal-dim:      rgba(0, 143, 120, 0.10);
+      --teal-glow:     rgba(0, 143, 120, 0.06);
+      --teal-mid:      rgba(0, 143, 120, 0.35);
+
+      --blue:          #1a66d4;
+      --blue-dim:      rgba(26, 102, 212, 0.10);
+
+      --red:           #dc2626;
+      --red-dim:       rgba(220, 38, 38, 0.08);
+
+      --text-primary:   #0d1b2e;
+      --text-secondary: #3a5070;
+      --text-muted:     #7a95b5;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'Lora', Georgia, serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+
+      --navbar-bg:        rgba(248, 251, 255, 0.94);
+      --shadow-card:      0 2px 12px rgba(20, 50, 100, 0.08), 0 1px 3px rgba(20, 50, 100, 0.05);
+      --shadow-card-hover:0 8px 30px rgba(20, 50, 100, 0.12), 0 2px 8px rgba(20, 50, 100, 0.06);
+
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  18px;
+      --radius-xl:  24px;
+
+      --t-fast:   0.15s ease;
+      --t-normal: 0.25s ease;
+    }
+
+    /* ── Reset ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-void);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navbar ─────────────────────────────────────────────────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--teal-dim);
+      border: 1px solid var(--teal-mid);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sep { color: var(--text-muted); font-weight: 300; }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color var(--t-fast), background var(--t-fast);
+      border: 1px solid transparent;
+    }
+
+    .nav-link:hover {
+      color: var(--teal);
+      background: var(--teal-dim);
+      border-color: var(--teal-mid);
+    }
+
+    .nav-link.active {
+      color: var(--teal);
+      background: var(--teal-dim);
+      border-color: var(--teal-mid);
+    }
+
+    /* ── Main ───────────────────────────────────────────────────── */
+    main {
+      flex: 1;
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 52px 24px 72px;
+    }
+
+    /* ── Page Header ────────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .eyebrow-text {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+      color: var(--blue);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+
+    .page-meta {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── Content Card ───────────────────────────────────────────── */
+    .content-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      animation: fadeUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s both;
+    }
+
+    .card-accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%);
+    }
+
+    .card-body {
+      padding: 32px 36px;
+    }
+
+    /* ── Terms Sections ─────────────────────────────────────────── */
+    .terms-section {
+      padding: 26px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .terms-section:first-child { padding-top: 0; }
+    .terms-section:last-child  { padding-bottom: 0; border-bottom: none; }
+
+    .terms-section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+      margin-top: 2px;
+    }
+
+    .section-badge--blue {
+      background: var(--blue-dim);
+      color: var(--blue);
+      border: 1px solid rgba(26,102,212,0.22);
+    }
+
+    .section-badge--teal {
+      background: var(--teal-dim);
+      color: var(--teal);
+      border: 1px solid var(--teal-mid);
+    }
+
+    .section-badge--red {
+      background: var(--red-dim);
+      color: var(--red);
+      border: 1px solid rgba(220,38,38,0.22);
+    }
+
+    .section-badge--amber {
+      background: rgba(180,83,9,0.08);
+      color: #b45309;
+      border: 1px solid rgba(180,83,9,0.2);
+    }
+
+    .section-badge--slate {
+      background: rgba(71,85,105,0.08);
+      color: #475569;
+      border: 1px solid rgba(71,85,105,0.15);
+    }
+
+    .terms-section-title {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .terms-section-clause {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .terms-section-body {
+      font-family: var(--font-body);
+      font-size: 0.94rem;
+      line-height: 1.82;
+      color: var(--text-secondary);
+      padding-left: 42px;
+    }
+
+    .terms-section-body p { margin-bottom: 10px; }
+    .terms-section-body p:last-child { margin-bottom: 0; }
+
+    /* ── Agreement banner ───────────────────────────────────────── */
+    .agreement-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--blue-dim);
+      border: 1px solid rgba(26,102,212,0.2);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-top: 28px;
+      animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s both;
+    }
+
+    .agreement-banner-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--blue-dim);
+      border: 1px solid rgba(26,102,212,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .agreement-banner-content {}
+
+    .agreement-banner-title {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 5px;
+      letter-spacing: 0.01em;
+    }
+
+    .agreement-banner-text {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Warning card ───────────────────────────────────────────── */
+    .warning-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(220,38,38,0.05);
+      border: 1px solid rgba(220,38,38,0.18);
+      border-radius: var(--radius-md);
+      padding: 15px 18px;
+      margin-top: 16px;
+      animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.22s both;
+    }
+
+    .warning-card-icon { color: var(--red); flex-shrink: 0; margin-top: 1px; }
+
+    .warning-card-text {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: #7f1d1d;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+    }
+
+    .warning-card-text strong { color: var(--red); }
+
+    /* ── Footer ─────────────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 18px 32px;
+    }
+
+    .footer-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-link {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--t-fast);
+    }
+
+    .footer-link:hover { color: var(--teal); }
+    .footer-sep { color: var(--border-bright); font-size: 0.7rem; }
+
+    ::-webkit-scrollbar       { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background: var(--border-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+    ::selection { background: var(--blue-dim); color: var(--blue); }
+
+    @media (max-width: 600px) {
+      .navbar { padding: 0 16px; }
+      .brand-sub, .brand-sep { display: none; }
+      main { padding: 36px 16px 56px; }
+      .card-body { padding: 22px 20px; }
+      .terms-section-body { padding-left: 0; margin-top: 12px; }
+      .nav-link { padding: 4px 8px; font-size: 0.62rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ─────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="brand-mark">
+        <svg width="16" height="16" viewBox="0 0 28 28" fill="none">
+          <rect x="11" y="2" width="6" height="10" rx="2" fill="#008f78"/>
+          <rect x="11" y="16" width="6" height="10" rx="2" fill="#008f78" opacity="0.5"/>
+          <rect x="2" y="11" width="10" height="6" rx="2" fill="#008f78" opacity="0.75"/>
+          <rect x="16" y="11" width="10" height="6" rx="2" fill="#008f78" opacity="0.9"/>
+        </svg>
+      </div>
+      <span class="brand-name">MedRAG</span>
+      <span class="brand-sep">|</span>
+      <span class="brand-sub">Medical Intelligence</span>
+    </a>
+    <nav class="nav-links" aria-label="Site navigation">
+      <a href="index.html"   class="nav-link">Home</a>
+      <a href="privacy.html" class="nav-link">Privacy</a>
+      <a href="terms.html"   class="nav-link active" aria-current="page">Terms</a>
+      <a href="support.html" class="nav-link">Support</a>
+    </nav>
+  </nav>
+
+  <!-- ── Main ───────────────────────────────────────────────────── -->
+  <main>
+
+    <!-- Page header -->
+    <header class="page-header">
+      <div class="page-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="eyebrow-text">Legal</span>
+      </div>
+      <h1 class="page-title">Terms of Use</h1>
+      <div class="page-meta">
+        <span class="page-meta-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Effective: January 2025
+        </span>
+        <span class="page-meta-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Last reviewed: March 2026
+        </span>
+      </div>
+    </header>
+
+    <!-- Content card -->
+    <div class="content-card">
+      <div class="card-accent-bar"></div>
+      <div class="card-body">
+
+        <!-- Clause 1 -->
+        <div class="terms-section">
+          <div class="terms-section-header">
+            <span class="section-badge section-badge--blue">01</span>
+            <div>
+              <p class="terms-section-title">Intended Purpose</p>
+              <p class="terms-section-clause">Clause 1 · Scope of Use</p>
+            </div>
+          </div>
+          <div class="terms-section-body">
+            <p>
+              This system is intended solely for educational and research purposes. It is an
+              independent project demonstrating retrieval-augmented generation (RAG) applied
+              to medical literature. It is not a certified medical device or clinical tool.
+            </p>
+          </div>
+        </div>
+
+        <!-- Clause 2 -->
+        <div class="terms-section">
+          <div class="terms-section-header">
+            <span class="section-badge section-badge--amber">02</span>
+            <div>
+              <p class="terms-section-title">Nature of AI-Generated Information</p>
+              <p class="terms-section-clause">Clause 2 · Accuracy &amp; Limitations</p>
+            </div>
+          </div>
+          <div class="terms-section-body">
+            <p>
+              The information provided by this system is generated using artificial intelligence
+              and retrieval techniques applied to indexed documents. Outputs may be incomplete,
+              inaccurate, outdated, or contextually inappropriate for specific clinical scenarios.
+            </p>
+            <p>
+              AI-generated responses should not be considered authoritative medical advice,
+              clinical guidance, or a substitute for expert professional judgement.
+            </p>
+          </div>
+        </div>
+
+        <!-- Clause 3 -->
+        <div class="terms-section">
+          <div class="terms-section-header">
+            <span class="section-badge section-badge--red">03</span>
+            <div>
+              <p class="terms-section-title">Prohibited Reliance</p>
+              <p class="terms-section-clause">Clause 3 · Clinical Decisions</p>
+            </div>
+          </div>
+          <div class="terms-section-body">
+            <p>
+              Users must not rely on this system for diagnosis, treatment planning, prescribing
+              decisions, triage, or any other patient care activity. This system is not validated
+              for clinical use and carries no regulatory approval (e.g., FDA, CE, MHRA).
+            </p>
+          </div>
+        </div>
+
+        <!-- Clause 4 -->
+        <div class="terms-section">
+          <div class="terms-section-header">
+            <span class="section-badge section-badge--teal">04</span>
+            <div>
+              <p class="terms-section-title">Professional Consultation</p>
+              <p class="terms-section-clause">Clause 4 · Healthcare Guidance</p>
+            </div>
+          </div>
+          <div class="terms-section-body">
+            <p>
+              Always consult a qualified and licensed healthcare professional — including
+              physicians, nurses, pharmacists, or other registered practitioners — before making
+              any medical, diagnostic, or therapeutic decisions. No information from this system
+              should replace or delay seeking professional medical advice.
+            </p>
+          </div>
+        </div>
+
+        <!-- Clause 5 -->
+        <div class="terms-section">
+          <div class="terms-section-header">
+            <span class="section-badge section-badge--slate">05</span>
+            <div>
+              <p class="terms-section-title">Limitation of Liability</p>
+              <p class="terms-section-clause">Clause 5 · User Responsibility</p>
+            </div>
+          </div>
+          <div class="terms-section-body">
+            <p>
+              By using this system, you acknowledge and agree that the creators, contributors,
+              and operators of this project bear no responsibility or liability for any
+              consequences arising from the use, misuse, or interpretation of information
+              generated by this system.
+            </p>
+            <p>
+              Use of this system constitutes your acceptance of these terms in full.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Agreement banner -->
+    <div class="agreement-banner" role="note" aria-label="Agreement notice">
+      <div class="agreement-banner-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="12" x2="15" y2="12"/>
+          <line x1="9" y1="16" x2="12" y2="16"/>
+        </svg>
+      </div>
+      <div class="agreement-banner-content">
+        <p class="agreement-banner-title">Acceptance of Terms</p>
+        <p class="agreement-banner-text">
+          By accessing or using MedRAG, you confirm that you have read, understood, and agree to
+          be bound by these Terms of Use. If you do not agree, please discontinue use immediately.
+          For questions, contact us via the <a href="support.html" style="color:var(--blue);font-weight:600;text-decoration:none;">Support page</a>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Warning card -->
+    <div class="warning-card" role="alert">
+      <div class="warning-card-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <p class="warning-card-text">
+        <strong>Not medical advice.</strong> This system does not provide, and is not a substitute for,
+        professional medical advice, diagnosis, or treatment. In a medical emergency, call your local
+        emergency services immediately.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-copy">© 2026 MedRAG — For research and educational use only.</span>
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">Privacy</a>
+        <span class="footer-sep">·</span>
+        <a href="terms.html"   class="footer-link">Terms</a>
+        <span class="footer-sep">·</span>
+        <a href="support.html" class="footer-link">Support</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

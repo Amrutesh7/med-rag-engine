@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedRAG — Context-Aware Medical Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Apply saved theme immediately to prevent flash of wrong theme -->
+  <script>
+    (function () {
+      try {
+        const saved = localStorage.getItem('medrag-theme');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Background canvas for particle network effect -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- ── Navbar ────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="brand-mark">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="11" y="2" width="6" height="10" rx="2" fill="var(--teal)"/>
+          <rect x="11" y="16" width="6" height="10" rx="2" fill="var(--teal)" opacity="0.5"/>
+          <rect x="2" y="11" width="10" height="6" rx="2" fill="var(--teal)" opacity="0.75"/>
+          <rect x="16" y="11" width="10" height="6" rx="2" fill="var(--teal)" opacity="0.9"/>
+        </svg>
+      </div>
+      <span class="brand-name">MedRAG</span>
+      <span class="brand-sep">|</span>
+      <span class="brand-tagline">Medical Intelligence System</span>
+    </div>
+
+    <div class="navbar-meta">
+      <span class="status-dot"></span>
+      <span class="status-label">Verified Medical Intelligence </span>
+      <div class="nav-divider"></div>
+      <span class="version-tag">v1.0.0</span>
+      <div class="nav-divider"></div>
+
+      <!-- Theme Toggle Button -->
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+        <!-- Sun icon — visible in dark mode -->
+        <svg class="theme-icon theme-icon--sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <!-- Moon icon — visible in light mode -->
+        <svg class="theme-icon theme-icon--moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <span class="theme-label" id="themeLabel">Dark</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ──────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Hero — compact two-column layout -->
+    <header class="hero-header">
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span class="eyebrow-text">RETRIEVAL-AUGMENTED GENERATION</span>
+        </div>
+        <h1 class="hero-title">
+          Context-Aware <em>Medical Intelligence</em>
+        </h1>
+        <p class="hero-subtitle">
+          Every answer grounded in verified research — each claim traceable to its source document.
+        </p>
+      </div>
+      <div class="hero-right">
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num" id="stat-docs">—</span>
+            <span class="stat-label">Documents</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">RAG</span>
+            <span class="stat-label">Retrieval</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">EBM</span>
+            <span class="stat-label">Evidence</span>
+          </div>
+        </div>
+        <div class="hero-badges">
+          <span class="hero-badge hero-badge--live">
+            <span class="live-dot"></span>Live
+          </span>
+          <span class="hero-badge">Research-grade dataset</span>
+          <span class="hero-badge">Peer-reviewed sources</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Query Section ─────────────────────────────────────────── -->
+    <section class="query-section" id="querySection">
+      <div class="query-card">
+        <div class="query-card-header">
+          <div class="query-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <span class="query-card-label">Clinical Query</span>
+          <div class="query-hint">
+            <kbd>Enter</kbd> submit &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> new line
+          </div>
+        </div>
+
+        <div class="textarea-wrapper">
+          <textarea
+            id="queryInput"
+            class="query-textarea"
+            placeholder="Ask a question based on medical evidence..."
+            rows="3"
+            spellcheck="false"
+            maxlength="1000"
+          ></textarea>
+        </div>
+
+        <div class="query-card-footer">
+          <div class="char-count">
+            <span id="charCount">0</span><span class="char-max"> / 1000</span>
+          </div>
+          <button class="submit-btn" id="submitBtn" type="button" disabled>
+            <span class="submit-btn-inner">
+              <span class="btn-text">Analyze Query</span>
+              <span class="btn-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </span>
+            <span class="btn-loading-text">Processing...</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Suggestion pills -->
+      <div class="suggestion-row">
+        <span class="suggestion-prefix">Try:</span>
+        <button class="suggestion-pill" data-query="What are the first-line treatments for Type 2 diabetes?">Type 2 diabetes</button>
+        <button class="suggestion-pill" data-query="What is insulin resistance and how does it affect the body?">Insulin resistance</button>
+        <button class="suggestion-pill" data-query="What are Disability-Adjusted Life Years (DALYs) and why are they used?">DALYs</button>
+        <button class="suggestion-pill" data-query="What trends have been observed in global cancer burden from 1990 to 2021??">Cancer burden</button>
+      </div>
+
+      <!-- Query History Panel -->
+      <div class="history-panel" id="historyPanel">
+        <div class="history-header">
+          <div class="history-header-left">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span>Recent Queries</span>
+            <span class="history-count-badge" id="historyCountBadge">0</span>
+          </div>
+          <button class="history-clear-btn" id="historyClearBtn" type="button">Clear history</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </section>
+
+    <!-- ── Loading State ─────────────────────────────────────────── -->
+    <div class="loading-state" id="loadingState" aria-live="polite">
+      <div class="loading-inner">
+        <div class="loading-pulse-grid">
+          <div class="pulse-bar"></div>
+          <div class="pulse-bar"></div>
+          <div class="pulse-bar"></div>
+          <div class="pulse-bar"></div>
+          <div class="pulse-bar"></div>
+        </div>
+        <p class="loading-label">Retrieving from medical knowledge base...</p>
+        <p class="loading-sub" id="loadingSubtext">Searching indexed documents</p>
+      </div>
+    </div>
+
+    <!-- ── Error State ────────────────────────────────────────────── -->
+    <div class="error-state" id="errorState" role="alert">
+      <div class="error-inner">
+        <div class="error-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="error-content">
+          <p class="error-title">Unable to retrieve response</p>
+          <p class="error-message" id="errorMessage">Could not connect to the MedRAG API.</p>
+        </div>
+        <button class="error-dismiss" id="errorDismiss" type="button" aria-label="Dismiss error">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Results Section ───────────────────────────────────────── -->
+    <section class="results-section" id="resultsSection">
+
+      <!-- Answer card -->
+      <div class="result-block">
+        <div class="result-block-header">
+          <div class="result-block-label">
+            <div class="label-icon label-icon--answer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/>
+              </svg>
+            </div>
+            <span>Clinical Answer</span>
+          </div>
+          <div class="result-block-actions">
+            <button class="action-btn" id="copyAnswerBtn" type="button" title="Copy answer">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </div>
+        <div class="answer-card">
+          <div class="answer-content" id="answerContent"></div>
+        </div>
+      </div>
+
+      <!-- Sources panel -->
+      <div class="result-block" id="sourcesBlock">
+        <div class="result-block-header">
+          <div class="result-block-label">
+            <div class="label-icon label-icon--sources">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <span>Evidence Sources</span>
+          </div>
+          <div class="sources-count-badge" id="sourcesCount">0 references</div>
+        </div>
+        <div class="sources-grid" id="sourcesGrid"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+
+      <!-- Col 1: Brand & Disclaimer -->
+      <div class="footer-col footer-col--brand">
+        <div class="footer-brand-row">
+          <div class="footer-brand-mark">
+            <svg width="14" height="14" viewBox="0 0 28 28" fill="none">
+              <rect x="11" y="2" width="6" height="10" rx="2" fill="var(--teal)"/>
+              <rect x="11" y="16" width="6" height="10" rx="2" fill="var(--teal)" opacity="0.5"/>
+              <rect x="2" y="11" width="10" height="6" rx="2" fill="var(--teal)" opacity="0.75"/>
+              <rect x="16" y="11" width="10" height="6" rx="2" fill="var(--teal)" opacity="0.9"/>
+            </svg>
+          </div>
+          <span class="footer-logo">MedRAG</span>
+          <span class="footer-version">v1.0.0</span>
+        </div>
+        <p class="footer-disclaimer">
+          This system is designed for medical research and educational use.
+
+Responses are generated using retrieval-augmented generation (RAG)
+over a curated dataset of medical documents.
+
+Outputs are not a substitute for professional medical advice.
+Always consult a qualified healthcare professional.
+        </p>
+      </div>
+
+      <!-- Col 2: System Info -->
+      <div class="footer-col footer-col--system">
+        <p class="footer-col-title">System Architecture</p>
+        <ul class="footer-info-list">
+          <li>
+            <span class="footer-info-label">Framework</span>
+            <span class="footer-info-value">Retrieval-Augmented Generation</span>
+          </li>
+          <li>
+            <span class="footer-info-label">Retrieval</span>
+            <span class="footer-info-value">Dense vector retrieval<br> (Sentence Transformers)</span>
+          </li>
+          <li>
+            <span class="footer-info-label">Corpora</span>
+            <span class="footer-info-value">Curated medical research PDFs</span>
+          </li>
+          <li>
+            <span class="footer-info-label">Standard</span>
+            <span class="footer-info-value">Evidence-Based Medicine (EBM)</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Compliance Tags & Status -->
+      <div class="footer-col footer-col--tags">
+        <p class="footer-col-title">Standards & Compliance</p>
+        <div class="footer-tags">
+          <span class="footer-tag">Peer-reviewed literature</span>
+          <span class="footer-tag">Structured document ingestion</span>
+          <span class="footer-tag">Source-traceable responses</span>
+        </div>
+        <div class="footer-status-row">
+          <span class="footer-status-dot"></span>
+          <span class="footer-status-text">All systems operational</span>
+          
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer bottom bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span class="footer-copy">© 2026 MedRAG. For research and clinical decision support use only.</span>
+        <span class="footer-links">
+          <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          <span class="footer-link-sep">·</span>
+          <a href="terms.html" class="footer-link">Terms of Use</a>
+          <span class="footer-link-sep">·</span>
+          <a href="#" class="footer-link">Developer API</a>
+          <span class="footer-link-sep">·</span>
+          <a href="support.html" class="footer-link">Support</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
-from src.loader import load_documents
-from src.chunker import create_chunks
-from src.embedder import embed
-from src.vectordb import get_collection
+from app.utils.loader import load_documents
+from app.utils.chunker import create_chunks
+from app.rag.embedder import embed
+from app.db.vectordb import get_collection
 
 
 def is_valid_chunk(text):

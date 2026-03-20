@@ -8,7 +8,7 @@ __pycache__/
 venv/
 env/
 
-# Environment variables (IMPORTANT)
+# Environment variables
 .env
 
 # RAG generated data
@@ -17,11 +17,22 @@ vectorstore/
 *.sqlite
 *.pkl
 
-# Your test folder
+# Dataset (IMPORTANT)
+dataset/
+
+# Test / trial files
 trial/
 
 # Logs
 *.log
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
 
 # VS Code
 .vscode/

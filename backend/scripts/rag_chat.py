@@ -1,4 +1,4 @@
-from src.rag_pipeline import ask_rag
+from app.rag.rag_pipeline import ask_rag
 
 print("RAG system ready.\n")
 
@@ -24,5 +24,6 @@ while True:
         if key not in seen:
             print(f"{meta['source']} (page {meta['page']})")
             seen.add(key)
+            print(f"Category: {meta['category']}")
 
     print("\n" + "="*60 + "\n")

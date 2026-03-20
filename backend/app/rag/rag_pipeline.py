@@ -1,5 +1,5 @@
-from src.embedder import embed
-from src.vectordb import get_collection
+from app.rag.embedder import embed
+from app.db.vectordb import get_collection
 from groq import Groq
 import os
 
@@ -12,10 +12,24 @@ def ask_rag(query):
     # Step 1: Embed
     query_embedding = embed(query)
 
+    def is_valid_query(query):
+        if len(query.split()) < 3:
+            return False
+        
+        weak_words = {"hi", "hello", "hey", "test" }
+
+        if query.lower().strip() in weak_words:
+            return False
+
+        return True
+
+    if not is_valid_query(query):
+        return "Please ask a meaningful medical question.", []
+
     # Step 2: Retrieve
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=5
+        n_results=4
     )
 
     docs = results["documents"][0]
@@ -31,7 +45,7 @@ def ask_rag(query):
         clean = doc.strip().replace("\n", " ")
         cleaned_docs.append(clean[:800])   # LIMIT
 
-    context = "\n\n".join(cleaned_docs)
+    context = "\n\n".join(cleaned_docs[:2]) # LIMIT to top 2 results
 
     # Step 4: Prompt (UNCHANGED)
     prompt = f"""
@@ -46,6 +60,7 @@ SAFETY RULES:
 - If the context does NOT fully answer the question, say:
   "The provided context does not contain sufficient information to fully answer this question."
 - Do NOT assume or infer missing details
+-If partial info exists → answer what is available + mention limitation briefly
 
 QUALITY RULES:
 - Start with a simple definition (1 sentence if applicable)
@@ -58,7 +73,7 @@ Context:
 {context}
 
 Question:
-{query}
+{query + " medical definition explanation causes symptoms"}
 
 Answer:
 """
