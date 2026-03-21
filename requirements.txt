@@ -3,6 +3,7 @@ uvicorn[standard]
 chromadb==0.4.24
 sentence-transformers
 langchain
+groq
 langchain-community
 pydantic
 python-dotenv
